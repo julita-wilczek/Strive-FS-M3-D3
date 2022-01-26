@@ -11,40 +11,77 @@
 }); */
 
 function firstButton(){
-fetch('https://api.pexels.com/v1/search?query=dogs', {
-    headers: {Authorization: '563492ad6f917000010000015af99495349042c9b0c053689fae61fc'}
+  fetch('https://api.pexels.com/v1/search?query=dogs', {
+      headers: {Authorization: '563492ad6f917000010000015af99495349042c9b0c053689fae61fc'}
+    })
+  .then(response => response.json())
+  .then(database => {
+   let cardImages = document.querySelectorAll(".card svg")
+      let images = document.getElementsByTagName("img")
+      for(let i = 0 ; i < images.length; i++ ){
+          images[i].src = database.photos[i].src.medium
+          cardImages[i].style.display = "none"
+          images[i].style.display = "inline-block"
+      }
   })
-.then(response => response.json())
-.then(database => {
-    console.log(database)
-    let cardImages = document.querySelectorAll(".card svg")
-    cardImages.forEach(image => {image.style.display = "none"
-    let newImage = document.createElement("img")
-    newImage.style.width="100%"
-    newImage.style.height="225px"
-    newImage.style.objectFit = "cover"
-    image.before(newImage) 
+  .catch(err => {
+    console.error(err)
+  });
+  }
 
-})
+function secondButton(){
+  fetch('https://api.pexels.com/v1/search?query=cats', {
+      headers: {Authorization: '563492ad6f917000010000015af99495349042c9b0c053689fae61fc'}
+    })
+  .then(response => response.json())
+  .then(database => {
+   let cardImages = document.querySelectorAll(".card svg")
+      let images = document.getElementsByTagName("img")
+      for(let i = 0 ; i < images.length; i++ ){
+          images[i].src = database.photos[i].src.medium
+          cardImages[i].style.display = "none"
+          images[i].style.display = "inline-block"
+      }
 
-    let images = document.getElementsByTagName("img")
-    for(let i = 0 ; i < images.length; i++ ){
-        images[i].src = database.photos[i].src.medium
+  })
+  .catch(err => {
+    console.error(err)
+  });
+  }
+
+
+
+
+    function createImages(){
+  
+        let cardImages = document.querySelectorAll(".card svg")
+        cardImages.forEach(image => {
+        let newImage = document.createElement("img")
+        newImage.style.width="100%"
+        newImage.style.height="225px"
+        newImage.style.objectFit = "cover"
+        image.before(newImage) 
+        newImage.style.display = "none"
+    
+    })
+
     }
 
-    let newImages = document.getElementsByTagName("img")
-    
-    
 
-    //database.photos[inex].src.medium
-})
-.catch(err => {
-	console.error(err)
-});
-}
+
+    function changeEdit(){
+
+      let buttons = document.querySelectorAll("button:nth-of-type(2)")
+      buttons.forEach (button => {
+        button.innerHTML = "Hide"
+      })
+    }
 
 window.onload = () => {
-    
+createImages()
+
+changeEdit()
+
 }
   
 // https://api.pexels.com/v1/search?query=your-query
